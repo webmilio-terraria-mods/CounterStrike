@@ -4,7 +4,7 @@ using WebmilioCommons.Networking;
 
 namespace CounterStrike
 {
-	public class CSMod : Mod
+	public sealed partial class CSMod : Mod
 	{
 		public CSMod()
         {
