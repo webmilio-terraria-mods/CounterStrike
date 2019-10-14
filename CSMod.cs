@@ -1,4 +1,5 @@
 using System.IO;
+using Terraria;
 using Terraria.ModLoader;
 using WebmilioCommons.Networking;
 
@@ -9,6 +10,15 @@ namespace CounterStrike
 		public CSMod()
         {
             Instance = this;
+        }
+
+
+        public override void Load()
+        {
+            if (!Main.dedServ)
+            {
+                LoadClient();
+            }
         }
 
 

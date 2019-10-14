@@ -1,4 +1,4 @@
-displayName = Dust II - CSGO in Terraria
+displayName = Dust II - Counter-Strike Guns in Terraria
 author = Webmilio, HellGoesOn
 version = 0.1
 Side = Both
