@@ -4,6 +4,7 @@
     {
         BoltAction,
         SemiAutomatic,
+        Burst,
         Automatic
     }
 }

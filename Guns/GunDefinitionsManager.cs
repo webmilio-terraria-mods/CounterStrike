@@ -1,4 +1,5 @@
-﻿using WebmilioCommons.Managers;
+﻿using CounterStrike.Guns.Pistols.Glock18;
+using WebmilioCommons.Managers;
 
 namespace CounterStrike.Guns
 {
@@ -7,7 +8,7 @@ namespace CounterStrike.Guns
         public override void DefaultInitialize()
         {
             //Glock18 = Add(new GunDefinition())
-            Glock18 = default;
+            Glock18 = Add<Glock18Definition>();
 
             base.DefaultInitialize();
         }

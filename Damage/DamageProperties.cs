@@ -2,20 +2,25 @@
 {
     public struct DamageProperties
     {
-        public readonly DamagePair head, chestArm, abdomenPelvis, legs;
+        public readonly float headMultiplier, chestArmsMultiplier, abdomenPelvisMultiplier, legsMultiplier;
 
 
-        public DamageProperties(DamagePair head, DamagePair chestArm, DamagePair abdomenPelvis, DamagePair legs)
+        public DamageProperties(float headMultiplier, int chestArmsMultiplier, int abdomenPelvisMultiplier, int legsMultiplier)
         {
-            this.head = head;
-            this.chestArm = chestArm;
-            this.abdomenPelvis = abdomenPelvis;
-            this.legs = legs;
+            this.headMultiplier = headMultiplier;
+            this.chestArmsMultiplier = chestArmsMultiplier;
+            this.abdomenPelvisMultiplier = abdomenPelvisMultiplier;
+            this.legsMultiplier = legsMultiplier;
         }
 
-        public DamageProperties(int unarmoredHead, int armoredHead, int unarmoredChestArms, int armoredChestArms, int unarmoredAbdomenPelvis, int armoredAbdomenPelvis, int unarmoredLegs, int armoredLegs)
-            : this(new DamagePair(unarmoredHead, armoredHead), new DamagePair(unarmoredChestArms, armoredChestArms), new DamagePair(unarmoredAbdomenPelvis, armoredAbdomenPelvis), new DamagePair(unarmoredLegs, armoredLegs))
+        public DamageProperties(int damage, int head, int chestArms, int abdomenPelvis, int legs)
         {
+            float fDamage = (float) damage + 1;
+
+            this.headMultiplier = head / fDamage;
+            this.chestArmsMultiplier = chestArms / fDamage;
+            this.abdomenPelvisMultiplier = abdomenPelvis / fDamage;
+            this.legsMultiplier = legs / fDamage;
         }
     }
 }

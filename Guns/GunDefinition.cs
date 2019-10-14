@@ -6,7 +6,7 @@ namespace CounterStrike.Guns
     public class GunDefinition : IHasUnlocalizedName
     {
         public GunDefinition(string unlocalizedName, int price, int magazineCost, int clipSize, FiringMode[] firingModes, int rpm, float moveSpeedModifier, float killAwardMultiplier,
-            int damage, int recoilRange, int accurateRange, float armorPenetration, int penetrationPower, float rangeModifier, DamageProperties damageProperties)
+            int damage, float accuracy, int accurateRange, float armorPenetration, int penetrationPower, float rangeModifier, DamageProperties damageProperties)
         {
             UnlocalizedName = unlocalizedName;
 
@@ -25,7 +25,7 @@ namespace CounterStrike.Guns
 
             Damage = damage;
 
-            RecoilRange = recoilRange;
+            Accuracy = accuracy;
 
             AccurateRange = accurateRange;
 
@@ -35,6 +35,16 @@ namespace CounterStrike.Guns
             RangeModifier = rangeModifier;
 
             DamageProperties = damageProperties;
+        }
+
+
+        public bool IsAutomatic()
+        {
+            for (int i = 0; i < FiringModes.Length; i++)
+                if (FiringModes[i] == FiringMode.Automatic)
+                    return true;
+
+            return false;
         }
 
 
@@ -56,7 +66,7 @@ namespace CounterStrike.Guns
 
         public int Damage { get; }
 
-        public int RecoilRange { get; }
+        public float Accuracy { get; }
 
         public int AccurateRange { get; }
 

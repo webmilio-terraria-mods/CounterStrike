@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.IO;
+using CounterStrike.Guns;
+using CounterStrike.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 using WebmilioCommons.Networking;
@@ -15,10 +18,21 @@ namespace CounterStrike
 
         public override void Load()
         {
+            CSGlobalProjectile.gunDefinitionPerProjectile = new Dictionary<Projectile, GunDefinition>();
+
+
             if (!Main.dedServ)
             {
                 LoadClient();
             }
+        }
+
+        public override void Unload()
+        {
+            CSGlobalProjectile.gunDefinitionPerProjectile = null;
+
+
+            GunDefinitionsManager.Instance.Unload();
         }
 
 

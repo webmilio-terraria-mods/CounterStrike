@@ -56,7 +56,7 @@ namespace CounterStrike.Players
 
                 this.SendIfLocal(new PlayerMoneyChangedPacket(_money - oldMoney));
             }*/
-            set;
+            internal set;
         }
     }
 }
