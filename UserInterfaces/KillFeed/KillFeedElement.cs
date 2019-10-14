@@ -20,8 +20,6 @@ namespace CounterStrike.UserInterfaces.KillFeed
             foreach (KillFeedEntry entry in KillFeedEntries)
             {
                 entry.Update();
-
-                Main.NewText(entry.ExistsFor);
                 entry.YOffset = 20 + KillFeedEntries.IndexOf(entry) * 42;
             }
 
