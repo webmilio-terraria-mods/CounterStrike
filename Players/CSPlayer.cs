@@ -1,5 +1,7 @@
-﻿using Terraria;
+﻿using CounterStrike.Guns;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using WebmilioCommons.Extensions;
 
 namespace CounterStrike.Players
@@ -15,9 +17,16 @@ namespace CounterStrike.Players
         #endregion
 
 
+        private float _accuracyFactor;
+
+
+        /// <summary>Changes the player's money by the given amount. Triggers animation on local client.</summary>
+        /// <param name="amount">The difference to add.</param>
+        /// <returns>The new amount.</returns>
         public int ModifyMoney(int amount)
         {
             Money += amount;
+            Main.NewText($"Gained {amount}$");
 
             // TODO Add animation code here.
 
@@ -42,6 +51,39 @@ namespace CounterStrike.Players
         }
 
 
+        #region Hooks
+
+        public override void Initialize()
+        {
+            InitializeGuns();
+        }
+
+        public override void ResetEffects()
+        {
+            if (AccuracyFactor < 1)
+            {
+                AccuracyFactor += 0.0175f;
+
+                if (AccuracyFactor >= 1)
+                    AccuracyFactor = 1;
+            }
+        }
+
+
+        public override void Load(TagCompound tag)
+        {
+            Money = tag.GetInt(nameof(Money));
+        }
+
+        public override TagCompound Save() =>
+            new TagCompound()
+            {
+                { nameof(Money), Money }
+            };
+
+        #endregion
+
+
         public int Money
         {
             get;
@@ -56,7 +98,19 @@ namespace CounterStrike.Players
 
                 this.SendIfLocal(new PlayerMoneyChangedPacket(_money - oldMoney));
             }*/
-            internal set;
+            set;
+        }
+
+        public float AccuracyFactor
+        {
+            get => _accuracyFactor;
+            set
+            {
+                if (value < 0)
+                    _accuracyFactor = 0;
+                else
+                    _accuracyFactor = value;
+            }
         }
     }
 }

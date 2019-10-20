@@ -5,8 +5,8 @@ namespace CounterStrike.Guns
 {
     public class GunDefinition : IHasUnlocalizedName
     {
-        public GunDefinition(string unlocalizedName, int price, int magazineCost, int clipSize, FiringMode[] firingModes, int rpm, float moveSpeedModifier, float killAwardMultiplier,
-            int damage, float accuracy, int accurateRange, float armorPenetration, int penetrationPower, float rangeModifier, DamageProperties damageProperties)
+        public GunDefinition(string unlocalizedName, int price, int magazineCost, int clipSize, FiringMode[] firingModes, int rpm, float moveSpeedModifier, int killAward,
+            int damage, float accuracy, float accuracyLossPerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties)
         {
             UnlocalizedName = unlocalizedName;
 
@@ -21,18 +21,15 @@ namespace CounterStrike.Guns
 
             MoveSpeedModifier = moveSpeedModifier;
 
-            KillAwardMultiplier = killAwardMultiplier;
+            KillAward = killAward;
 
             Damage = damage;
 
             Accuracy = accuracy;
-
-            AccurateRange = accurateRange;
+            AccuracyLossPerShot = accuracyLossPerShot;
 
             ArmorPenetration = armorPenetration;
             PenetrationPower = penetrationPower;
-
-            RangeModifier = rangeModifier;
 
             DamageProperties = damageProperties;
         }
@@ -62,18 +59,15 @@ namespace CounterStrike.Guns
 
         public float MoveSpeedModifier { get; }
 
-        public float KillAwardMultiplier { get; }
+        public int KillAward { get; }
 
         public int Damage { get; }
 
         public float Accuracy { get; }
-
-        public int AccurateRange { get; }
+        public float AccuracyLossPerShot { get; }
 
         public float ArmorPenetration { get; }
         public int PenetrationPower { get; }
-
-        public float RangeModifier { get; }
 
         public DamageProperties DamageProperties { get; }
     }

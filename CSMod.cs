@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using CounterStrike.Guns;
+using CounterStrike.NPCs;
 using CounterStrike.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
@@ -20,7 +21,6 @@ namespace CounterStrike
         {
             CSGlobalProjectile.gunDefinitionPerProjectile = new Dictionary<Projectile, GunDefinition>();
 
-
             if (!Main.dedServ)
             {
                 LoadClient();
@@ -33,6 +33,7 @@ namespace CounterStrike
 
 
             GunDefinitionsManager.Instance.Unload();
+            CSNPCHitBoxes.Instance.Unload();
         }
 
 

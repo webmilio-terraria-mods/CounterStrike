@@ -31,7 +31,17 @@ namespace CounterStrike.UserInterfaces.KillFeed
         public string KillerName { get; private set; }
         public string VictimName { get; private set; }
 
-        public int ExistsFor { get; set; }
+        private int existsFor;
+
+        public int ExistsFor
+        {
+            get => existsFor;
+            set
+            {
+                Main.NewText(value);
+                existsFor = value;
+            }
+        }
 
         public float XOffset { get; set; }
 

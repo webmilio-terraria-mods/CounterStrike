@@ -23,15 +23,20 @@ namespace CounterStrike.UserInterfaces.KillFeed
                 entry.YOffset = 20 + KillFeedEntries.IndexOf(entry) * 42;
             }
 
-            KillFeedEntries.RemoveAll(x => x.ExistsFor >= KillFeedEntry.MAX_EXISTANCE_TIME);
+            for (int i = KillFeedEntries.Count - 1; i >= 0; i--)
+                if (KillFeedEntries[i].ExistsFor >= KillFeedEntry.MAX_EXISTANCE_TIME)
+                    KillFeedEntries.RemoveAt(i);
+
+            base.Update(gameTime);
         }
+
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             foreach(KillFeedEntry entry in KillFeedEntries)
             {
                 if (entry.ExistsFor < 2)
-                    return;
+                    continue;
 
                 spriteBatch.Draw(Main.magicPixel, entry.Position, new Rectangle(0, 0, 400, 38), Color.Black * 0.33f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 

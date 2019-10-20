@@ -1,18 +1,22 @@
 ﻿using CounterStrike.Players;
 using Microsoft.Xna.Framework;
+using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
 using WebmilioCommons.Extensions;
 
 namespace CounterStrike.Commands
 {
-    public class ShowMoneyCommand : ModCommand
+    public class ShowMoneyCommand : SourceEngineCommand
     {
-        public override void Action(CommandCaller caller, string input, string[] args)
+        public ShowMoneyCommand() : base("cs_money", CommandType.Chat)
         {
-            Player player = caller.Player;
+        }
 
-            if (player != null && player.IsLocalPlayer())
+
+        protected override void Run(CommandCaller caller, Player player, string input, string[] args)
+        {
+            if (player.IsLocalPlayer())
             {
                 CSPlayer csPlayer = CSPlayer.Get(player);
 
@@ -20,9 +24,5 @@ namespace CounterStrike.Commands
                 Main.NewText("Current money: " + csPlayer.Money, textColor);
             }
         }
-
-        
-        public override string Command { get; } = "cs_showmoney";
-        public override CommandType Type { get; } = CommandType.Chat;
     }
 }
