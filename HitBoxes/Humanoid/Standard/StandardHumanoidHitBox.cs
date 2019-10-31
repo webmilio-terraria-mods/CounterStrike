@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 
-namespace CounterStrike.HitBoxes.Humanoid
+namespace CounterStrike.HitBoxes.Humanoid.Standard
 {
     public abstract class StandardHumanoidHitBox : HitBox
     {

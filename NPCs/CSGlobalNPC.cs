@@ -12,8 +12,7 @@ namespace CounterStrike.NPCs
     {
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            crit = false;
-
+            //crit = false;
             HitBox hitBox = CSNPCHitBoxes.Instance[npc];
 
             if (hitBox == null)
@@ -29,7 +28,6 @@ namespace CounterStrike.NPCs
             if (hitBox.IsHead(npc, hitPosition))
             {
                 damage = (int) (damage * gunDefinition.DamageProperties.headMultiplier);
-                crit = true;
             }
             else if (hitBox.IsChestArms(npc, hitPosition))
                 damage = (int) (damage * gunDefinition.DamageProperties.chestArmsMultiplier);

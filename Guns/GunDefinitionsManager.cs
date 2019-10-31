@@ -2,6 +2,7 @@
 using CounterStrike.Guns.Pistols.Glock18;
 using CounterStrike.Guns.Rifles.AWP;
 using CounterStrike.Guns.Rifles.M4;
+using CounterStrike.Guns.Rifles.Negev;
 using WebmilioCommons.Managers;
 
 namespace CounterStrike.Guns
@@ -17,9 +18,15 @@ namespace CounterStrike.Guns
 
             #endregion
 
+            #region Heavy
+
+            Negev = Add<NegevDefinition>();
+
+            #endregion
 
             #region Rifles
 
+            M4A4 = Add<M4A4Definition>();
             M4A1S = Add<M4A1SDefinition>();
 
             AWP = Add<AWPDefinition>();
@@ -38,9 +45,15 @@ namespace CounterStrike.Guns
 
         #endregion
 
+        #region Heavy
+
+        public NegevDefinition Negev { get; private set; }
+
+        #endregion
 
         #region Rifles
 
+        public M4A4Definition M4A4 { get; private set; }
         public M4A1SDefinition M4A1S { get; private set; }
 
         public AWPDefinition AWP { get; private set; }

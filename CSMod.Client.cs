@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CounterStrike.UserInterfaces.KillFeed;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.UI;
 
 namespace CounterStrike

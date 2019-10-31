@@ -6,7 +6,7 @@ namespace CounterStrike.Guns
     public class GunDefinition : IHasUnlocalizedName
     {
         public GunDefinition(string unlocalizedName, int price, int magazineCost, int clipSize, FiringMode[] firingModes, int rpm, float moveSpeedModifier, int killAward,
-            int damage, float accuracy, float accuracyLossPerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties)
+            int damage, float accuracy, float accuracyChangePerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties)
         {
             UnlocalizedName = unlocalizedName;
 
@@ -26,7 +26,7 @@ namespace CounterStrike.Guns
             Damage = damage;
 
             Accuracy = accuracy;
-            AccuracyLossPerShot = accuracyLossPerShot;
+            AccuracyChangePerShot = accuracyChangePerShot;
 
             ArmorPenetration = armorPenetration;
             PenetrationPower = penetrationPower;
@@ -64,7 +64,7 @@ namespace CounterStrike.Guns
         public int Damage { get; }
 
         public float Accuracy { get; }
-        public float AccuracyLossPerShot { get; }
+        public float AccuracyChangePerShot { get; }
 
         public float ArmorPenetration { get; }
         public int PenetrationPower { get; }

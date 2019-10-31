@@ -56,7 +56,7 @@ namespace CounterStrike.Guns
             speedX = unaccurateSpeed.X;
             speedY = unaccurateSpeed.Y;
 
-            csPlayer.AccuracyFactor -= Definition.AccuracyLossPerShot;
+            csPlayer.AccuracyFactor += Definition.AccuracyChangePerShot;
 
             return true;
         }

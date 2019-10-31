@@ -15,7 +15,7 @@ namespace CounterStrike.UserInterfaces.KillFeed
         }
 
 
-        public override void Update(GameTime gameTime)
+        public void UpdateFeed(GameTime gameTime)
         {
             foreach (KillFeedEntry entry in KillFeedEntries)
             {

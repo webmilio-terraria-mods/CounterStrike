@@ -12,6 +12,6 @@ namespace CounterStrike.Guns.Rifles.M4
         }
 
 
-        public override Vector2? HoldoutOffset() => new Vector2(-20, 5);
+        public override Vector2? HoldoutOffset() => new Vector2(-17, 5);
     }
 }

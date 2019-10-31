@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.UI;
 
 namespace CounterStrike.UserInterfaces.KillFeed
@@ -20,8 +21,8 @@ namespace CounterStrike.UserInterfaces.KillFeed
                 base.Append(KillFeedElement);
             }
 
-
-            KillFeedElement?.Update(gameTime);
+            if (Main.FrameSkipMode == 0)
+                KillFeedElement?.UpdateFeed(gameTime);
         }
 
 

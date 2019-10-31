@@ -1,5 +1,6 @@
 ﻿using CounterStrike.Guns;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using WebmilioCommons.Extensions;
@@ -16,7 +17,7 @@ namespace CounterStrike.Players
 
         #endregion
 
-
+        private const float ACCURACY_PER_TICK = 2f / Constants.TICKS_PER_SECOND;
         private float _accuracyFactor;
 
 
@@ -60,13 +61,32 @@ namespace CounterStrike.Players
 
         public override void ResetEffects()
         {
-            if (AccuracyFactor < 1)
+            if (Main.FrameSkipMode > 0)
+                CSMod.Instance.KillFeedLayer?.KillFeedUIState?.KillFeedElement?.UpdateFeed(Main._drawInterfaceGameTime);
+        }
+
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            LeftClick = triggersSet.MouseLeft;
+        }
+
+        public override void PreUpdate()
+        {
+            CSGun gun = null;
+
+            if (player.HeldItem != null && player.HeldItem.modItem is CSGun csGun)
+                gun = csGun;
+
+            if (gun == null || gun.Definition.AccuracyChangePerShot < 0)
             {
-                AccuracyFactor += 0.0175f;
+                AccuracyFactor += ACCURACY_PER_TICK;
 
                 if (AccuracyFactor >= 1)
                     AccuracyFactor = 1;
             }
+            else if (gun.Definition.AccuracyChangePerShot > 0 && !LeftClick)
+                AccuracyFactor = 0;
         }
 
 
@@ -108,9 +128,14 @@ namespace CounterStrike.Players
             {
                 if (value < 0)
                     _accuracyFactor = 0;
+                else if (value > 1)
+                    _accuracyFactor = 1;
                 else
                     _accuracyFactor = value;
             }
         }
+
+
+        public bool LeftClick { get; private set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Terraria.ID;
 
-namespace CounterStrike.HitBoxes.Humanoid
+namespace CounterStrike.HitBoxes.Humanoid.Standard
 {
-    public class ZombieHitBox : StandardHumanoidHitBox
+    public class StandardZombiesHitBox : StandardHumanoidHitBox
     {
-        public ZombieHitBox() : base(NPCID.Zombie, NPCID.ArmedZombie, NPCID.FemaleZombie, NPCID.BaldZombie,
+        public StandardZombiesHitBox() : base(
+            NPCID.Zombie, NPCID.ArmedZombie, NPCID.FemaleZombie, NPCID.BaldZombie,
             NPCID.ZombieRaincoat,
             NPCID.TwiggyZombie, NPCID.ArmedZombieTwiggy,
             NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo,
@@ -13,7 +14,7 @@ namespace CounterStrike.HitBoxes.Humanoid
             NPCID.ZombieMushroom, NPCID.ZombieMushroomHat,
             NPCID.DoctorBones, NPCID.TheGroom, NPCID.TheBride,
             NPCID.BloodZombie,
-            NPCID.ZombieSuperman, NPCID.ZombiePixie, NPCID.ZombieSweater, NPCID.ZombieXmas)
+            NPCID.ZombieSuperman, NPCID.ZombiePixie, NPCID.ZombieSweater, NPCID.ZombieXmas, NPCID.ZombieDoctor)
         {
         }
     }
