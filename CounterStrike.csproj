@@ -15,7 +15,7 @@
       <HintPath>bin\Debug\net45\SourceEngineConsole.dll</HintPath>
     </Reference>
     <Reference Include="WebmilioCommons">
-      <HintPath>bin\Debug\net45\WebmilioCommons.dll</HintPath>
+      <HintPath>..\..\references\WebmilioCommons.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using CounterStrike.UserInterfaces.KillFeed;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace CounterStrike
@@ -11,6 +13,13 @@ namespace CounterStrike
         private void LoadClient()
         {
             KillFeedLayer = new KillFeedLayer(new KillFeedUIState());
+
+            Reload = RegisterHotKey("Reload", Keys.G.ToString());
+        }
+
+        private void UnloadClient()
+        {
+            Reload = null;
         }
 
 
@@ -26,5 +35,7 @@ namespace CounterStrike
 
 
         public KillFeedLayer KillFeedLayer { get; private set; }
+
+        public ModHotKey Reload { get; private set; }
     }
 }

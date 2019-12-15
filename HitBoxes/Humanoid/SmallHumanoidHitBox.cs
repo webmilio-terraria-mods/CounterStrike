@@ -10,22 +10,22 @@ namespace CounterStrike.HitBoxes.Humanoid
         }
 
 
-        public override bool IsHead(NPC npc, Vector2 position)
+        public override bool IsHead(Vector2 position, NPC npc, Projectile projectile)
         {
             return false;
         }
 
-        public override bool IsChestArms(NPC npc, Vector2 position)
+        public override bool IsChestArms(Vector2 position, NPC npc, Projectile projectile)
         {
             return false;
         }
 
-        public override bool IsAbdomenPelvis(NPC npc, Vector2 position)
+        public override bool IsAbdomenPelvis(Vector2 position, NPC npc, Projectile projectile)
         {
             return false;
         }
 
-        public override bool IsLegs(NPC npc, Vector2 position)
+        public override bool IsLegs(Vector2 position, NPC npc, Projectile projectile)
         {
             return false;
         }

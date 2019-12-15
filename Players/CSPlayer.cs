@@ -27,8 +27,6 @@ namespace CounterStrike.Players
         public int ModifyMoney(int amount)
         {
             Money += amount;
-            Main.NewText($"Gained {amount}$");
-
             // TODO Add animation code here.
 
             return Money;
@@ -93,13 +91,21 @@ namespace CounterStrike.Players
         public override void Load(TagCompound tag)
         {
             Money = tag.GetInt(nameof(Money));
+
+            LoadGuns(tag);
         }
 
-        public override TagCompound Save() =>
-            new TagCompound()
+        public override TagCompound Save()
+        {
+            TagCompound tag = new TagCompound()
             {
                 { nameof(Money), Money }
             };
+
+            SaveGuns(tag);
+
+            return tag;
+        }
 
         #endregion
 

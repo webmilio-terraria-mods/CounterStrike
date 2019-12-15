@@ -3,6 +3,7 @@ using CounterStrike.Guns;
 using CounterStrike.Players;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Extensions;
 
 namespace CounterStrike.Projectiles
 {

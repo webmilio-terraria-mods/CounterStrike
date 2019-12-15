@@ -11,13 +11,13 @@ namespace CounterStrike.HitBoxes.Humanoid.Standard
         }
 
 
-        public override bool IsHead(NPC npc, Vector2 position) => position.Y < 20.5f;
+        public override bool IsHead(Vector2 position, NPC npc, Projectile projectile) => position.Y < 20.5f;
 
-        public override bool IsChestArms(NPC npc, Vector2 position) => 
+        public override bool IsChestArms(Vector2 position, NPC npc, Projectile projectile) => 
             position.Y >= 20.5f && position.Y < 58f; // Since he's holding a shield, we treat his entire body as a "chest".
 
-        public override bool IsAbdomenPelvis(NPC npc, Vector2 position) => false;
+        public override bool IsAbdomenPelvis(Vector2 position, NPC npc, Projectile projectile) => false;
 
-        public override bool IsLegs(NPC npc, Vector2 position) => false;
+        public override bool IsLegs(Vector2 position, NPC npc, Projectile projectile) => false;
     }
 }

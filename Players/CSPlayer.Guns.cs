@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CounterStrike.Guns;
+using Terraria.ModLoader.IO;
 
 namespace CounterStrike.Players
 {
@@ -33,7 +34,7 @@ namespace CounterStrike.Players
         }
 
 
-        public IEnumerable<GunDefinition> OwnedAmmo() => _ammo.Keys;
+        public Dictionary<GunDefinition, int>.KeyCollection OwnedAmmo() => _ammo.Keys;
 
 
         private void CheckAmmo(GunDefinition gun)
@@ -48,7 +49,20 @@ namespace CounterStrike.Players
             _ammo = new Dictionary<GunDefinition, int>();
         }
 
+        private void LoadGuns(TagCompound tag)
+        {
+
+        }
+
+        private void SaveGuns(TagCompound tag)
+        {
+
+        }
+
 
         public bool Reloading { get; set; }
+        public int ReloadTicks { get; private set; }
+
+        public int SpareClips { get; }
     }
 }
