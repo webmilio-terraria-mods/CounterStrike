@@ -9,10 +9,14 @@ namespace CounterStrike.Guns
 {
     public abstract class CSGun : CSItem
     {
-        protected CSGun(string displayName, string tooltip, int width, int height, GunDefinition definition, int rarity = ItemRarityID.White) : 
+        protected CSGun(string displayName, string tooltip, int width, int height, GunDefinition definition, int rarity = ItemRarityID.White, 
+            int shootProjectile = ProjectileID.Bullet, float shootSpeed = 16f) : 
             base(displayName, tooltip, width, height, value: 0, rarity: rarity, defense: 0)
         {
             Definition = definition;
+
+            ShootProjectile = shootProjectile;
+            ShootSpeed = shootSpeed;
         }
 
 
@@ -34,34 +38,68 @@ namespace CounterStrike.Guns
             item.crit = 0;
 
             item.UseSound = SoundID.Item11;
-            item.shoot = ProjectileID.Bullet;
-            item.shootSpeed = 16f;
+            item.shoot = ShootProjectile;
+            item.shootSpeed = ShootSpeed;
         }
 
+
+        public override bool AltFunctionUse(Player player) => Definition.CanBeMounted && player.velocity == Vector2.Zero;
+
+        public override bool ConsumeAmmo(Player player) => false;
 
         public override bool CanUseItem(Player player)
         {
             CSPlayer csPlayer = CSPlayer.Get(player);
 
+            if (player.altFunctionUse == ItemAlternativeFunctionID.ActivatedAndUsed)
+            {
+                
+                if (Main.mouseRightRelease)
+                {
+                    csPlayer.ToggleMount();
+                    CombatText.NewText(new Rectangle((int) player.Center.X, (int) player.Center.Y, 0, 0), Color.Red, csPlayer.GunMounted ? "Mounted" : "Dismounted");
+                }
+
+                return false;
+            }
+
             return csPlayer.HasAmmo(Definition) && !csPlayer.Reloading;
         }
+
+
+        public override void HoldItem(Player player)
+        {
+            CSPlayer csPlayer = CSPlayer.Get(player);
+
+            if (Definition.CanBeMounted && csPlayer.GunMounted)
+            {
+                player.maxRunSpeed = 0;
+                player.velocity = Vector2.Zero;
+            }
+        }
+
+
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             CSPlayer csPlayer = CSPlayer.Get(player);
 
             Vector2 unaccurateSpeed = new Vector2(speedX, speedY).RotatedByRandom(
-                (1 - csPlayer.AccuracyFactor) * MathHelper.ToRadians((1 - Definition.Accuracy) * Constants.MAX_SPREAD));
+                (1 - csPlayer.AccuracyFactor) * MathHelper.ToRadians((1 - Definition.GetAccuracy(csPlayer)) * Constants.MAX_SPREAD));
 
             speedX = unaccurateSpeed.X;
             speedY = unaccurateSpeed.Y;
 
-            csPlayer.AccuracyFactor += Definition.AccuracyChangePerShot;
+            csPlayer.AccuracyFactor += Definition.GetAccuracyChangePerShot(csPlayer);
 
             return true;
         }
 
 
         public GunDefinition Definition { get; }
+
+        public int ShootProjectile { get; }
+
+        public float ShootSpeed { get; }
     }
 }

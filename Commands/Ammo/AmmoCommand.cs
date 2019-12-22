@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CounterStrike.Guns;
 using CounterStrike.Players;
 using Microsoft.Xna.Framework;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Guns
 {
-    public class AmmoCommand : SourceEngineCommand
+    public class AmmoCommand : StandardCommand
     {
         public const string COMMAND = "cs_ammo";
 
@@ -18,7 +19,7 @@ namespace CounterStrike.Commands.Guns
         }
 
 
-        protected override void RunLocal(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             CSPlayer csPlayer = CSPlayer.Get(player);
 
@@ -39,19 +40,15 @@ namespace CounterStrike.Commands.Guns
             }
             else
             {
-                if (!GunDefinitionsManager.Instance.TryGet(args[0], out GunDefinition gun))
+                GunDefinition definition = GunDefinitionLoader.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
+
+                if (definition == default)
                 {
                     Main.NewText($"Specified gun `{args[0]}` doesn't exist.", Color.Red);
                     return;
                 }
 
-                if (!csPlayer.HasPurchasedThisSession(gun))
-                {
-                    Main.NewText("You haven't purchased this gun or any ammo for this gun this session!", Color.Red);
-                    return;
-                }
-
-                Main.NewText($"{gun.UnlocalizedName}:{csPlayer.GetAmmoCount(gun)}");
+                Main.NewText($"{definition.UnlocalizedName}:{csPlayer.GetAmmoCount(definition)}");
             }
         }
 

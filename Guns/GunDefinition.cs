@@ -1,37 +1,41 @@
 ﻿using CounterStrike.Damage;
+using CounterStrike.Players;
 using WebmilioCommons.Managers;
 
 namespace CounterStrike.Guns
 {
     public class GunDefinition : IHasUnlocalizedName
     {
-        public GunDefinition(string unlocalizedName, int price, int magazineCost, int clipSize, FiringMode[] firingModes, int rpm, float moveSpeedModifier, int killAward,
-            int damage, float accuracy, float accuracyChangePerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties)
+        public GunDefinition(string unlocalizedName, int price, float bulletCost, int magazineSize, int startingMagazineCount, FiringMode[] firingModes, int rpm, float baseMoveSpeedModifier, int killAward,
+            int damage, float baseAccuracy, float baseAccuracyChangePerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties, bool canBeMounted = false)
         {
             UnlocalizedName = unlocalizedName;
 
             Price = price;
 
-            MagazineCost = magazineCost;
-            ClipSize = clipSize;
+            BulletCost = bulletCost;
+            MagazineSize = magazineSize;
+            StartingMagazineCount = startingMagazineCount;
 
             FiringModes = firingModes;
 
             RPM = rpm;
 
-            MoveSpeedModifier = moveSpeedModifier;
+            BaseMoveSpeedModifier = baseMoveSpeedModifier;
 
             KillAward = killAward;
 
             Damage = damage;
 
-            Accuracy = accuracy;
-            AccuracyChangePerShot = accuracyChangePerShot;
+            BaseAccuracy = baseAccuracy;
+            BaseAccuracyChangePerShot = baseAccuracyChangePerShot;
 
             ArmorPenetration = armorPenetration;
             PenetrationPower = penetrationPower;
 
             DamageProperties = damageProperties;
+
+            CanBeMounted = canBeMounted;
         }
 
 
@@ -45,30 +49,41 @@ namespace CounterStrike.Guns
         }
 
 
+        public virtual float GetAccuracy(CSPlayer csPlayer) => BaseAccuracy;
+
+        public virtual float GetAccuracyChangePerShot(CSPlayer csPlayer) => BaseAccuracyChangePerShot;
+
+
+        public virtual float GetMoveSpeedModifier(CSPlayer csPlayer) => BaseMoveSpeedModifier;
+
+
         public string UnlocalizedName { get; }
 
         public int Price { get; }
 
-        public int MagazineCost { get; }
-        public int ClipSize { get; }
+        public float BulletCost { get; }
+        public int MagazineSize { get; }
+        public int StartingMagazineCount { get; }
 
         public FiringMode[] FiringModes { get; }
 
         /// <summary>Rounds per minute</summary>
         public int RPM { get; }
 
-        public float MoveSpeedModifier { get; }
+        public float BaseMoveSpeedModifier { get; }
 
         public int KillAward { get; }
 
         public int Damage { get; }
 
-        public float Accuracy { get; }
-        public float AccuracyChangePerShot { get; }
+        public float BaseAccuracy { get; }
+        public float BaseAccuracyChangePerShot { get; }
 
         public float ArmorPenetration { get; }
         public int PenetrationPower { get; }
 
         public DamageProperties DamageProperties { get; }
+
+        public bool CanBeMounted { get; }
     }
 }

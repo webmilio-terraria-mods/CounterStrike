@@ -1,18 +1,18 @@
 ﻿using CounterStrike.Players;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands
 {
-    public class GiveMoneyCommand : SourceEngineCommand
+    public class GiveMoneyCommand : StandardCommand
     {
         public GiveMoneyCommand() : base("cs_givemoney", CommandType.Chat)
         {
         }
 
 
-        protected override void RunLocal(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             CSPlayer csPlayer = CSPlayer.Get(player);
 

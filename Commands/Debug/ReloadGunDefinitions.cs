@@ -1,26 +1,24 @@
 ﻿using CounterStrike.Guns;
-using CounterStrike.NPCs;
-using Microsoft.Xna.Framework;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ReloadGunDefinitions : SourceEngineCommand
+    public class ReloadGunDefinitions : StandardCommand
     {
         public ReloadGunDefinitions() : base("cs_reloadgundefs", CommandType.Chat)
         {
         }
 
 
-        protected override void RunLocal(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             Main.NewText("Unloading CS Gun Definitions...");
-            GunDefinitionsManager.Instance.Unload();
+            GunDefinitionLoader.Instance.Unload();
 
             Main.NewText("Loading CS Gun Definitions...");
-            GunDefinitionsManager.Instance.DefaultInitialize();
+            GunDefinitionLoader.Instance.TryLoad();
 
             Main.NewText("Reload complete.");
         }

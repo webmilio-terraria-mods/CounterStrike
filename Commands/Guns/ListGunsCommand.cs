@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using CounterStrike.Guns;
 using CounterStrike.Players;
-using Microsoft.Xna.Framework;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Guns
 {
-    public class ListGunsCommand : SourceEngineCommand
+    public class ListGunsCommand : StandardCommand
     {
         public const string COMMAND = "cs_guns";
 
@@ -19,16 +18,17 @@ namespace CounterStrike.Commands.Guns
         }
 
 
-        protected override void Run(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             List<string> guns = new List<string>();
 
             CSPlayer csPlayer = CSPlayer.Get(player);
 
             if (args.Length == 0)
-                GunDefinitionsManager.Instance.ForAll(g => guns.Add(g.UnlocalizedName));
+                GunDefinitionLoader.Instance.ForAllGeneric(g => guns.Add(g.UnlocalizedName));
+
             else if (args[0].Equals("-a", StringComparison.CurrentCultureIgnoreCase))
-                GunDefinitionsManager.Instance.ForAll(g =>
+                GunDefinitionLoader.Instance.ForAllGeneric(g =>
                 {
                     if (g.Price <= csPlayer.Money)
                         guns.Add(g.UnlocalizedName);

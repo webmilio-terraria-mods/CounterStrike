@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using CounterStrike.Ammo;
 using CounterStrike.Guns;
 using CounterStrike.NPCs;
 using CounterStrike.Projectiles;
@@ -20,6 +21,7 @@ namespace CounterStrike
         public override void Load()
         {
             CSGlobalProjectile.gunDefinitionPerProjectile = new Dictionary<Projectile, GunDefinition>();
+            ExtraClipRule.Load();
 
             if (!Main.dedServ)
                 LoadClient();
@@ -28,9 +30,7 @@ namespace CounterStrike
         public override void Unload()
         {
             CSGlobalProjectile.gunDefinitionPerProjectile = null;
-
-            GunDefinitionsManager.Instance.Unload();
-            CSNPCHitBoxes.Instance.Unload();
+            ExtraClipRule.Unload();
 
             if (!Main.dedServ)
                 UnloadClient();

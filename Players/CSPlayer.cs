@@ -3,12 +3,13 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using WebmilioCommons.Extensions;
 
 namespace CounterStrike.Players
 {
     public sealed partial class CSPlayer : ModPlayer
     {
+        private Item _previouslyHeldItem;
+
         #region Player Getters
 
         public static CSPlayer Get() => Get(Main.LocalPlayer);
@@ -33,6 +34,24 @@ namespace CounterStrike.Players
         }
 
 
+        #region Hooks
+
+        public override void Initialize()
+        {
+            InitializeGuns();
+            InitializeAmmo();
+        }
+
+
+        public override void Load(TagCompound tag)
+        {
+            Money = tag.GetInt(nameof(Money));
+
+            LoadAmmo(tag);
+            LoadGuns(tag);
+        }
+
+
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
             ModifyHitNPC(item, null, target, ref damage, ref knockback, ref crit);
@@ -50,17 +69,12 @@ namespace CounterStrike.Players
         }
 
 
-        #region Hooks
-
-        public override void Initialize()
+        public override void PostItemCheck()
         {
-            InitializeGuns();
-        }
+            if (_previouslyHeldItem != player.HeldItem)
+                GunMounted = false;
 
-        public override void ResetEffects()
-        {
-            if (Main.FrameSkipMode > 0)
-                CSMod.Instance.KillFeedLayer?.KillFeedUIState?.KillFeedElement?.UpdateFeed(Main._drawInterfaceGameTime);
+            _previouslyHeldItem = player.HeldItem;
         }
 
 
@@ -69,6 +83,7 @@ namespace CounterStrike.Players
             LeftClick = triggersSet.MouseLeft;
         }
 
+
         public override void PreUpdate()
         {
             CSGun gun = null;
@@ -76,24 +91,32 @@ namespace CounterStrike.Players
             if (player.HeldItem != null && player.HeldItem.modItem is CSGun csGun)
                 gun = csGun;
 
-            if (gun == null || gun.Definition.AccuracyChangePerShot < 0)
+            if (gun == null || gun.Definition.GetAccuracyChangePerShot(this) < 0)
             {
                 AccuracyFactor += ACCURACY_PER_TICK;
 
                 if (AccuracyFactor >= 1)
                     AccuracyFactor = 1;
             }
-            else if (gun.Definition.AccuracyChangePerShot > 0 && !LeftClick)
+            else if (gun.Definition.GetAccuracyChangePerShot(this) > 0 && !LeftClick)
                 AccuracyFactor = 0;
         }
 
-
-        public override void Load(TagCompound tag)
+        public override void PreUpdateMovement()
         {
-            Money = tag.GetInt(nameof(Money));
 
-            LoadGuns(tag);
         }
+
+
+        public override void ResetEffects()
+        {
+            if (Main.FrameSkipMode > 0)
+                CSMod.Instance.KillFeedLayer?.KillFeedUIState?.KillFeedElement?.UpdateFeed(Main._drawInterfaceGameTime);
+
+            
+            ResetEffectsAmmo();
+        }
+
 
         public override TagCompound Save()
         {
@@ -102,6 +125,7 @@ namespace CounterStrike.Players
                 { nameof(Money), Money }
             };
 
+            SaveAmmo(tag);
             SaveGuns(tag);
 
             return tag;

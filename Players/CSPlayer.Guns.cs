@@ -1,23 +1,17 @@
 ﻿using System.Collections.Generic;
 using CounterStrike.Guns;
 using Terraria.ModLoader.IO;
+using WebmilioCommons.Extensions;
 
 namespace CounterStrike.Players
 {
     public partial class CSPlayer
     {
-        private Dictionary<GunDefinition, int> _ammo;
+        private bool _gunMounted;
 
-
-        public int GetAmmoCount(GunDefinition gun)
-        {
-            CheckAmmo(gun);
-
-            return _ammo[gun];
-        }
-
-        public bool HasAmmo(GunDefinition gun) => GetAmmoCount(gun) > 0 || true;
-        public bool HasPurchasedThisSession(GunDefinition gun) => _ammo.ContainsKey(gun);
+        public bool ToggleMount() => GunMounted = !GunMounted;
+        public void MountGun() => GunMounted = true;
+        public void DismountGun() => GunMounted = false;
 
 
         public bool TryBuyGun(GunDefinition gun)
@@ -27,31 +21,23 @@ namespace CounterStrike.Players
 
             CheckAmmo(gun);
 
-            _ammo[gun] = gun.ClipSize * 2;
+            _ammo[gun] = gun.StartingMagazineCount * gun.MagazineSize;
             Money -= gun.Price;
 
             return true;
         }
 
 
-        public Dictionary<GunDefinition, int>.KeyCollection OwnedAmmo() => _ammo.Keys;
-
-
-        private void CheckAmmo(GunDefinition gun)
-        {
-            if (!_ammo.ContainsKey(gun))
-                _ammo.Add(gun, 0);
-        }
-
+        #region Hooks
 
         private void InitializeGuns()
         {
-            _ammo = new Dictionary<GunDefinition, int>();
+
         }
 
         private void LoadGuns(TagCompound tag)
         {
-
+            
         }
 
         private void SaveGuns(TagCompound tag)
@@ -59,10 +45,25 @@ namespace CounterStrike.Players
 
         }
 
+        #endregion
+
 
         public bool Reloading { get; set; }
         public int ReloadTicks { get; private set; }
 
-        public int SpareClips { get; }
+
+        public bool GunMounted
+        {
+            get => _gunMounted;
+            set
+            {
+                if (_gunMounted == value)
+                    return;
+
+                _gunMounted = value;
+
+                this.SendIfLocal<PlayerMountedStatusChanged>();
+            }
+        }
     }
 }

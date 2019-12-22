@@ -5,7 +5,7 @@
         public readonly float headMultiplier, chestArmsMultiplier, abdomenPelvisMultiplier, legsMultiplier;
 
 
-        public DamageProperties(float headMultiplier, int chestArmsMultiplier, int abdomenPelvisMultiplier, int legsMultiplier)
+        public DamageProperties(float headMultiplier, float chestArmsMultiplier, float abdomenPelvisMultiplier, float legsMultiplier)
         {
             this.headMultiplier = headMultiplier;
             this.chestArmsMultiplier = chestArmsMultiplier;

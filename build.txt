@@ -1,8 +1,8 @@
 displayName = Dust II - Counter-Strike Guns in Terraria
-author = Webmilio, HellGoesOn
+author = Webmilio, HellGoesOn, Blockaroz
 version = 0.1
 Side = Both
 hideCode = false
 includeSource = false
 buildIgnore = *.csproj, *.user, *.bin, *.vs, *.exe, *.force, *.cache, *.FileListAbsolute.txt, *.xml, *.suo, obj\*, bin\*, .vs\*, .idea\*, .git\*, packages\*
-modReferences = WebmilioCommons@0.1.7.10, SourceEngineConsole@0.1
+modReferences = WebmilioCommons@0.1.9.6

@@ -1,25 +1,24 @@
 ﻿using CounterStrike.NPCs;
-using Microsoft.Xna.Framework;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ReloadCSNPCHitBoxes : SourceEngineCommand
+    public class ReloadCSNPCHitBoxes : StandardCommand
     {
         public ReloadCSNPCHitBoxes() : base("cs_reloadhitboxes", CommandType.Chat)
         {
         }
 
 
-        protected override void RunLocal(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             Main.NewText("Unloading CS NPC HitBoxes...");
-            CSNPCHitBoxes.Instance.Unload();
+            CSNPCHitBoxesLoader.Instance.Unload();
 
             Main.NewText("Loading CS NPC HitBoxes...");
-            CSNPCHitBoxes.Instance.Load();
+            CSNPCHitBoxesLoader.Instance.TryLoad();
 
             Main.NewText("Reload complete.");
         }

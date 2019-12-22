@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using WebmilioCommons.Extensions;
 
 namespace CounterStrike.HitBoxes.Eyes
 {

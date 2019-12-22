@@ -1,17 +1,17 @@
-﻿using SourceEngineConsole.Commands;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ShowRotationLineCommand : SourceEngineCommand
+    public class ShowRotationLineCommand : StandardCommand
     {
         public ShowRotationLineCommand() : base("cs_showrotationline", CommandType.Chat)
         {
         }
 
 
-        protected override void RunLocal(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             if (args.Length == 0)
             {

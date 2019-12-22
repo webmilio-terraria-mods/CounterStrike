@@ -7,7 +7,7 @@ namespace CounterStrike.Guns.Pistols.Deagle
         public Deagle() : base("Deagle", 
             "As expensive as it is powerful, the Desert Eagle is an iconic\n" +
             "pistol that is difficult to master but surprisingly accurate at long range.",
-            42, 27, GunDefinitionsManager.Instance.Deagle)
+            42, 27, GunDefinitionLoader.Instance.GetGeneric<DeagleDefinition>())
         {
         }
 

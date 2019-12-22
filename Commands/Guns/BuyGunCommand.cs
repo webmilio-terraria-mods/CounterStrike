@@ -1,13 +1,14 @@
-﻿using CounterStrike.Guns;
+﻿using System;
+using CounterStrike.Guns;
 using CounterStrike.Players;
 using Microsoft.Xna.Framework;
-using SourceEngineConsole.Commands;
 using Terraria;
 using Terraria.ModLoader;
+using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Guns
 {
-    public class BuyGunCommand : SourceEngineCommand
+    public class BuyGunCommand : StandardCommand
     {
         private const string COMMAND = "cs_buy";
 
@@ -17,38 +18,33 @@ namespace CounterStrike.Commands.Guns
         }
 
 
-        protected override void Run(CommandCaller caller, Player player, string input, string[] args)
+        protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
-            GunDefinition gun = null;
-
             if (args.Length == 0)
             {
                 Main.NewText(Usage, Color.Red);
                 return;
             }
 
-            args[0] = args[0].ToLower();
 
-
-            if (!GunDefinitionsManager.Instance.Contains(args[0]))
+            GunDefinition definition = GunDefinitionLoader.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
+            if (definition == default)
             {
                 Main.NewText($"Gun name '{args[0]} is invalid. Use /cs_guns for a list of guns.");
                 return;
             }
 
-            gun = GunDefinitionsManager.Instance[args[0]];
-
 
             CSPlayer csPlayer = CSPlayer.Get(player);
 
-            if (csPlayer.Money < gun.Price)
+            if (csPlayer.Money < definition.Price)
             {
                 Main.NewText($"Specified gun '{args[0]}' is too costly. Use /cs_guns -a for a list of guns you can buy.");
                 return;
             }
 
 
-            csPlayer.TryBuyGun(gun);
+            csPlayer.TryBuyGun(definition);
         }
 
 

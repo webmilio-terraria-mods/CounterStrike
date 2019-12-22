@@ -6,7 +6,7 @@ using WebmilioCommons.Loaders;
 
 namespace CounterStrike.NPCs
 {
-    public class CSNPCHitBoxes : SingletonLoader<CSNPCHitBoxes, HitBox>
+    public class CSNPCHitBoxesLoader : SingletonLoader<CSNPCHitBoxesLoader, HitBox>
     {
         private readonly Dictionary<int, HitBox> _hitBoxesByNPCId = new Dictionary<int, HitBox>();
 
@@ -32,10 +32,8 @@ namespace CounterStrike.NPCs
         }
 
 
-        public override void Unload()
+        protected override void PostUnload()
         {
-            base.Unload();
-
             _hitBoxesByNPCId.Clear();
         }
 

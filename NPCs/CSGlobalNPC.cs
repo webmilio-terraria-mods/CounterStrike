@@ -16,7 +16,7 @@ namespace CounterStrike.NPCs
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             //crit = false;
-            HitBox hitBox = CSNPCHitBoxes.Instance[npc];
+            HitBox hitBox = CSNPCHitBoxesLoader.Instance[npc];
 
             if (hitBox == null)
                 return;
