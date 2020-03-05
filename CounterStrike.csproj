@@ -11,12 +11,15 @@
     <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define $(DefineConstants) -unsafe $(AllowUnsafeBlocks)" />
   </Target>
   <ItemGroup>
-    <Reference Include="WebmilioCommons">
-      <HintPath>..\WebmilioCommons-Releases\WebmilioCommons.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Worlds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SourceEngineConsole">
+      <HintPath>..\..\..\..\..\..\Downloads\SourceEngineConsole.dll</HintPath>
+    </Reference>
+    <Reference Include="WebmilioCommons">
+      <HintPath>..\..\..\..\..\WebmilioCommons.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
