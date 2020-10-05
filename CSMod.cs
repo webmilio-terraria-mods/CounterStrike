@@ -37,7 +37,10 @@ namespace CounterStrike
         }
 
 
-        public override void HandlePacket(BinaryReader reader, int whoAmI) => NetworkPacketLoader.Instance.HandlePacket(reader, whoAmI);
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
+        {
+            NetworkPacketLoader.Instance.HandlePacket(reader, whoAmI);
+        }
 
         public static CSMod Instance { get; private set; }
 	}

@@ -13,22 +13,21 @@ namespace CounterStrike.NPCs
 {
     public sealed class CSGlobalNPC : GlobalNPC
     {
+        private static Projectile _testProj = new Projectile();
+
+
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             //crit = false;
-            HitBox hitBox = CSNPCHitBoxesLoader.Instance[npc];
-
-            if (hitBox == null)
+            if (!CSNPCHitBoxesLoader.Instance.TryGetByNPC(npc, out var hitBox))
                 return;
 
             if (!CSGlobalProjectile.gunDefinitionPerProjectile.ContainsKey(projectile)) // Makes only guns from this mod capable of using hitboxes.
                 return;
 
-            GunDefinition gunDefinition = CSGlobalProjectile.gunDefinitionPerProjectile[projectile];
+            var gunDefinition = CSGlobalProjectile.gunDefinitionPerProjectile[projectile];
+            var hitPosition = new Vector2(Math.Abs(npc.position.X - projectile.position.X), Math.Abs(npc.position.Y - projectile.position.Y));
 
-            Vector2 hitPosition = new Vector2(Math.Abs(npc.position.X - projectile.position.X), Math.Abs(npc.position.Y - projectile.position.Y));
-
-            
 
             if (hitBox.IsHead(hitPosition, npc, projectile))
             {
@@ -61,6 +60,9 @@ namespace CounterStrike.NPCs
 
             if (ShowRotationLineCommand.ShowRotationLine)
                 DrawRotationLines(spriteBatch, npc);
+
+            if (ShowHitBoxesCommand.ShowHitBoxes)
+                DrawHitBoxes(spriteBatch, npc);
         }
 
         private void DrawRotationLines(SpriteBatch spriteBatch, NPC npc)
@@ -73,11 +75,7 @@ namespace CounterStrike.NPCs
 
             Rectangle sourceRectangle = new Rectangle(0, 0, 1, 1);
 
-            if (npc.boss)
-                spriteBatch.Draw(Main.magicPixel, new Rectangle(centerX, centerY, 30, 2), sourceRectangle, Color.Red, npc.GetBossHeadRotation(), Vector2.Zero, SpriteEffects.None, 0);
-            else
-                spriteBatch.Draw(Main.magicPixel, new Rectangle(centerX, centerY, 30, 2), sourceRectangle, Color.Red, npc.rotation, Vector2.Zero, SpriteEffects.None, 0);
-
+            spriteBatch.Draw(Main.magicPixel, new Rectangle(centerX, centerY, 30, 2), sourceRectangle, Color.Red, npc.boss ? npc.GetBossHeadRotation() : npc.rotation, Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.Draw(Main.magicPixel, new Rectangle(centerX, centerY, 25, 2), sourceRectangle, Color.Blue, npc.VelocityRotation(), Vector2.Zero, SpriteEffects.None, 0);
 
             if (npc.target >= 0)
@@ -89,6 +87,37 @@ namespace CounterStrike.NPCs
                     lengthY = (int) (npc.Center.Y - player.Center.Y);
 
                 spriteBatch.Draw(Main.magicPixel, new Rectangle(centerX, centerY, 20, 2), sourceRectangle, Color.Green, (float) (Math.Atan2(lengthY, lengthX) - Math.PI), Vector2.Zero, SpriteEffects.None, 0);
+            }
+        }
+
+        private void DrawHitBoxes(SpriteBatch spriteBatch, NPC npc)
+        {
+            if (!CSNPCHitBoxesLoader.Instance.TryGetByNPC(npc, out var hitBox))
+                return;
+
+            var position = npc.Center - Main.screenPosition;
+
+            int
+                offsetX = (int) position.X,
+                offsetY = (int) position.Y;
+
+            var sourceRectangle = new Rectangle(0, 0, 1, 1);
+
+            for (int i = 0; i < npc.height; i++)
+            {
+                Color hitBoxColor = default;
+
+                var hitPosition = new Vector2(0, Math.Abs(i));
+                if (hitBox.IsHead(hitPosition, npc, _testProj))
+                    hitBoxColor = Color.Red;
+                else if (hitBox.IsChestArms(hitPosition, npc, _testProj))
+                    hitBoxColor = Color.DarkGreen;
+                else if (hitBox.IsAbdomenPelvis(hitPosition, npc, _testProj))
+                    hitBoxColor = Color.Blue;
+                else if (hitBox.IsLegs(hitPosition, npc, _testProj))
+                    hitBoxColor = Color.Yellow;
+
+                spriteBatch.Draw(Main.magicPixel, new Rectangle(offsetX, (int) (npc.TopLeft.Y - Main.screenPosition.Y) + i, 2, 2), sourceRectangle, hitBoxColor, npc.rotation, Vector2.Zero, SpriteEffects.None, 0);
             }
         }
     }

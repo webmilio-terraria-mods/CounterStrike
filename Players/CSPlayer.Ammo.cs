@@ -36,7 +36,9 @@ namespace CounterStrike.Players
         public Dictionary<GunDefinition, int>.KeyCollection OwnedAmmo() => _ammo.Keys;
 
 
-        public int GetMaxAmmo(GunDefinition gun) => gun.StartingMagazineCount + SpareClips;
+        public int GetMaxAmmo(GunDefinition gun) => GetMaxClips(gun) * gun.MagazineSize;
+
+        public int GetMaxClips(GunDefinition gun) => gun.StartingMagazineCount + SpareClips;
 
         public float GetMaxMagazines(GunDefinition gun) => GetMaxAmmo(gun) / (float) gun.MagazineSize;
 

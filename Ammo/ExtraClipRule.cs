@@ -15,7 +15,7 @@ namespace CounterStrike.Ammo
 
         public abstract bool MeetsRequirements(CSPlayer csPlayer);
 
-        public abstract int ExtraClipCount(ref int add, ref float mult, ref int flat);
+        public abstract void ExtraClipCount(ref int add, ref float mult, ref int flat);
 
 
         public string UnlocalizedName { get; }

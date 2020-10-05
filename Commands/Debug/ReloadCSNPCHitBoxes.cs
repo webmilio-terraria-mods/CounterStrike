@@ -5,7 +5,7 @@ using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ReloadCSNPCHitBoxes : StandardCommand
+    public class ReloadCSNPCHitBoxes : CSDebugCommand
     {
         public ReloadCSNPCHitBoxes() : base("cs_reloadhitboxes", CommandType.Chat)
         {

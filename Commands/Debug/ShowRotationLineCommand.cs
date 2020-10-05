@@ -4,7 +4,7 @@ using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ShowRotationLineCommand : StandardCommand
+    public class ShowRotationLineCommand : CSDebugCommand
     {
         public ShowRotationLineCommand() : base("cs_showrotationline", CommandType.Chat)
         {

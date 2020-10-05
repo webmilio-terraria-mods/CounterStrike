@@ -23,12 +23,21 @@ namespace CounterStrike.NPCs
         public HitBox GetByNPC(NPC npc) => GetByNPC(npc.type);
         public HitBox GetByNPC(ModNPC modNPC) => GetByNPC(modNPC.npc);
 
-        public HitBox GetByNPC(int npcId)
-        {
-            if (!_hitBoxesByNPCId.ContainsKey(npcId))
-                return default;
+        public HitBox GetByNPC(int npcId) => _hitBoxesByNPCId[npcId];
 
-            return _hitBoxesByNPCId[npcId];
+
+        public bool TryGetByNPC(NPC npc, out HitBox hitBox) => TryGetByNPC(npc.type, out hitBox);
+        public bool TryGetByNPC(ModNPC modNPC, out HitBox hitBox) => TryGetByNPC(modNPC.npc, out hitBox);
+
+        public bool TryGetByNPC(int npcId, out HitBox hitBox)
+        {
+            hitBox = default;
+
+            if (!_hitBoxesByNPCId.ContainsKey(npcId))
+                return false;
+
+            hitBox = _hitBoxesByNPCId[npcId];
+            return true;
         }
 
 

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using CounterStrike.Items;
 using CounterStrike.Players;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CounterStrike.Guns
 {
@@ -78,7 +80,12 @@ namespace CounterStrike.Guns
             }
         }
 
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            var player = CSPlayer.Get();
 
+            tooltips.Add(new TooltipLine(mod, "cs_ammo_avail", $"{player.GetAmmoCount(Definition)} / {Definition.MagazineSize}, max of {player.GetMaxClips(Definition)} clips"));
+        }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

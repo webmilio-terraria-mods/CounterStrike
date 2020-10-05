@@ -17,9 +17,11 @@ namespace CounterStrike.Ammo
 
         public override bool MeetsRequirements(CSPlayer csPlayer) => Requirement(csPlayer);
 
-        public override int ExtraClipCount(ref int add, ref float mult, ref int flat)
+        public override void ExtraClipCount(ref int add, ref float mult, ref int flat)
         {
-            throw new System.NotImplementedException();
+            add += Add;
+            mult += Mult;
+            flat += Flat;
         }
 
 

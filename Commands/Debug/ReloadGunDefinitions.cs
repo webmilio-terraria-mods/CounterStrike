@@ -5,7 +5,7 @@ using WebmilioCommons.Commands;
 
 namespace CounterStrike.Commands.Debug
 {
-    public class ReloadGunDefinitions : StandardCommand
+    public class ReloadGunDefinitions : CSDebugCommand
     {
         public ReloadGunDefinitions() : base("cs_reloadgundefs", CommandType.Chat)
         {
