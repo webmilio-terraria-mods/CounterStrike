@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CounterStrike", "CounterStrike.csproj", "{881A96B3-4FEA-4338-9CC4-C2F143C0B622}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SourceEngineConsole", "..\SourceEngineConsole\SourceEngineConsole.csproj", "{DFF2A79A-2E20-43E3-8DAC-F593F7B68B0A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{881A96B3-4FEA-4338-9CC4-C2F143C0B622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881A96B3-4FEA-4338-9CC4-C2F143C0B622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881A96B3-4FEA-4338-9CC4-C2F143C0B622}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFF2A79A-2E20-43E3-8DAC-F593F7B68B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFF2A79A-2E20-43E3-8DAC-F593F7B68B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFF2A79A-2E20-43E3-8DAC-F593F7B68B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFF2A79A-2E20-43E3-8DAC-F593F7B68B0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
