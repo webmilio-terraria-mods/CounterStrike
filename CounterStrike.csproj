@@ -19,6 +19,13 @@
   <ItemGroup>
     <Reference Include="WebmilioCommons">
       <HintPath>..\WebmilioCommons-Releases\WebmilioCommons.dll</HintPath>
+	</Reference>
+	<Reference Include="SourceEngineConsole">
+      <HintPath>..\..\..\..\..\..\Downloads\SourceEngineConsole.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+	<Folder Include="Helpers\" />
+    <Folder Include="Worlds\" />
   </ItemGroup>
 </Project>
