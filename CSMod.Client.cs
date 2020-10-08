@@ -16,11 +16,13 @@ namespace CounterStrike
             BuyLayer = new BuyLayer(new BuyMenuState());
 
             Reload = RegisterHotKey("Reload", Keys.G.ToString());
+            OpenBuyMenu = RegisterHotKey("Open buy menu", Keys.NumPad0.ToString());
         }
 
         private void UnloadClient()
         {
             Reload = null;
+            OpenBuyMenu = null;
         }
 
 
@@ -33,7 +35,10 @@ namespace CounterStrike
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             layers.Add(KillFeedLayer);
-            layers.Add(BuyLayer);
+
+            int index = layers.FindIndex(x => x.Name == "Vanilla: Mouse Text");
+
+            layers.Insert(index, BuyLayer);
         }
 
 
@@ -42,5 +47,7 @@ namespace CounterStrike
         public BuyLayer BuyLayer { get; private set; }
 
         public ModHotKey Reload { get; private set; }
+
+        public ModHotKey OpenBuyMenu { get; private set; }
     }
 }

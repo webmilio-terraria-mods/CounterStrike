@@ -9,12 +9,19 @@ namespace CounterStrike.UserInterfaces.BuyMenu
         public BuyLayer(BuyMenuState state) : base("CounterStrike: Buy Menu", InterfaceScaleType.UI)
         {
             BuyUIState = state;
+            BuyUIState.Activate();
+            Interactable = new UserInterface();
+            Interactable.SetState(BuyUIState);
         }
 
 
         public void Update(GameTime gameTime)
         {
-            BuyUIState?.Update(gameTime);
+            if (BuyUIState != null && BuyUIState.Visible)
+            {
+                BuyUIState?.Update(gameTime);
+                Interactable.Update(gameTime);
+            }
         }
 
         protected override bool DrawSelf()
@@ -26,6 +33,8 @@ namespace CounterStrike.UserInterfaces.BuyMenu
         }
 
 
-        public BuyMenuState BuyUIState { get; } 
+        public BuyMenuState BuyUIState { get; }
+
+        public UserInterface Interactable { get; }
     }
 }

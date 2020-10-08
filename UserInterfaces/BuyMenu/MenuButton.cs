@@ -20,8 +20,15 @@ namespace CounterStrike.UserInterfaces.BuyMenu
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Main.fontMouseText, OptionName, this.GetDimensions().Position() + new Vector2(6, this.Height.Pixels - 6), Color.Orange);
-            DrawBorderedRectangle(this.GetDimensions().Position(), (int)this.Width.Pixels, (int)this.Height.Pixels, IsMouseHovering ? Color.Black : Color.Red, Color.Orange, spriteBatch);
+            DrawBorderedRectangle(this.GetDimensions().Position(), (int)this.Width.Pixels, (int)this.Height.Pixels, IsMouseHovering ? Color.Red * 0.5f : Color.Black * 0.5f, Color.Orange, spriteBatch);
+            spriteBatch.DrawString(Main.fontMouseText, OptionName, this.GetDimensions().Position() + new Vector2(6, this.Height.Pixels - 28), Color.Orange);
+
+            Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
+
+            if (this.ContainsPoint(MousePosition))
+            {
+                Main.LocalPlayer.mouseInterface = true;
+            }
         }
 
 

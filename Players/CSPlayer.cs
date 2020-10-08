@@ -81,6 +81,9 @@ namespace CounterStrike.Players
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             LeftClick = triggersSet.MouseLeft;
+
+            if (CSMod.Instance.OpenBuyMenu.JustPressed)
+                CSMod.Instance.BuyLayer.BuyUIState.Visible = !CSMod.Instance.BuyLayer.BuyUIState.Visible;
         }
 
 
