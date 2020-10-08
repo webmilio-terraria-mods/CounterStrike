@@ -25,10 +25,10 @@ namespace CounterStrike.Commands.Guns
             CSPlayer csPlayer = CSPlayer.Get(player);
 
             if (args.Length == 0)
-                GunDefinitionLoader.Instance.ForAllGeneric(g => guns.Add(g.UnlocalizedName));
+                GunDefinitions.Instance.ForAllGeneric(g => guns.Add(g.UnlocalizedName));
 
             else if (args[0].Equals("-a", StringComparison.CurrentCultureIgnoreCase))
-                GunDefinitionLoader.Instance.ForAllGeneric(g =>
+                GunDefinitions.Instance.ForAllGeneric(g =>
                 {
                     if (g.Price <= csPlayer.Money)
                         guns.Add(g.UnlocalizedName);

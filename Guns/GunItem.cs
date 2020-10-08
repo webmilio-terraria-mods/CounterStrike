@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace CounterStrike.Guns
 {
-    public abstract class CSGun : CSItem
+    public abstract class GunItem : CSItem
     {
-        protected CSGun(string displayName, string tooltip, int width, int height, GunDefinition definition, int rarity = ItemRarityID.White, 
+        protected GunItem(string displayName, string tooltip, int width, int height, GunDefinition definition, int rarity = ItemRarityID.White, 
             int shootProjectile = ProjectileID.Bullet, float shootSpeed = 16f) : 
             base(displayName, tooltip, width, height, value: 0, rarity: rarity, defense: 0)
         {
@@ -42,6 +42,14 @@ namespace CounterStrike.Guns
             item.UseSound = SoundID.Item11;
             item.shoot = ShootProjectile;
             item.shootSpeed = ShootSpeed;
+        }
+
+
+        public override bool Autoload(ref string name)
+        {
+            Definition.GunItem = this;
+
+            return base.Autoload(ref name);
         }
 
 
@@ -84,7 +92,7 @@ namespace CounterStrike.Guns
         {
             var player = CSPlayer.Get();
 
-            tooltips.Add(new TooltipLine(mod, "cs_ammo_avail", $"{player.GetAmmoCount(Definition)} / {Definition.MagazineSize}, max of {player.GetMaxClips(Definition)} clips"));
+            tooltips.Add(new TooltipLine(mod, "cs_ammo_avail", $"{player.GetAmmo(Definition)} / {Definition.MagazineSize}, max of {player.GetMaxClips(Definition)} clips"));
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -98,6 +106,8 @@ namespace CounterStrike.Guns
             speedY = unaccurateSpeed.Y;
 
             csPlayer.AccuracyFactor += Definition.GetAccuracyChangePerShot(csPlayer);
+
+            csPlayer.ConsumeAmmo(Definition, 1);
 
             return true;
         }

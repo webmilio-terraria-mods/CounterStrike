@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CounterStrike.Guns;
+using CounterStrike.Players;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
@@ -11,21 +13,44 @@ using ReLogic.Graphics;
 
 namespace CounterStrike.UserInterfaces.BuyMenu
 {
-    public class MenuButton : UIImageButton
+    public class BuyMenuButton : UIImageButton
     {
-        public MenuButton(string optionName) : base(Main.magicPixel)
+        public BuyMenuButton(string text) : base(Main.magicPixel)
         {
-            OptionName = optionName;
+            OptionName = text;
+        }
+
+        public BuyMenuButton(string text, GunDefinition gun) : base(Main.magicPixel)
+        {
+            OptionName = text;
+            Gun = gun;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            var display = OptionName;
+
+            if (Gun != default)
+            {
+                var csPlayer = CSPlayer.Get();
+                var playerMoney = csPlayer.Money;
+
+                if (playerMoney < Gun.Price)
+                    display += $" ({playerMoney} / {Gun.Price} $)";
+
+                csPlayer.GetAmmoCost(Gun, out var buyable, out var cost);
+
+                if (cost > 0)
+                    display += $" (r: {(int)Math.Ceiling(cost)} for {buyable})";
+            }
+
+
             DrawBorderedRectangle(this.GetDimensions().Position(), (int)this.Width.Pixels, (int)this.Height.Pixels, IsMouseHovering ? Color.Red * 0.5f : Color.Black * 0.5f, Color.Orange, spriteBatch);
-            spriteBatch.DrawString(Main.fontMouseText, OptionName, this.GetDimensions().Position() + new Vector2(6, this.Height.Pixels - 28), Color.Orange);
+            spriteBatch.DrawString(Main.fontMouseText, display, this.GetDimensions().Position() + new Vector2(6, this.Height.Pixels - 28), Color.Orange);
 
-            Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
+            var mousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
 
-            if (this.ContainsPoint(MousePosition))
+            if (this.ContainsPoint(mousePosition))
             {
                 Main.LocalPlayer.mouseInterface = true;
             }
@@ -100,6 +125,8 @@ namespace CounterStrike.UserInterfaces.BuyMenu
             #endregion
         }
 
-        public string OptionName { get; set; }
+        public GunDefinition Gun { get; }
+
+        public string OptionName { get; protected set; }
     }
 }

@@ -11,12 +11,13 @@ using Terraria.UI;
 
 namespace CounterStrike.UserInterfaces.BuyMenu
 {
-    public class MenuPanel : UIPanel
+    public class BuyMenuPanel : UIPanel
     {
-        public MenuPanel()
+        public BuyMenuPanel()
         {
-            MenuOptions = new List<MenuButton>();
+            MenuOptions = new List<BuyMenuButton>();
         }
+
 
         public void PostInitialize()
         {
@@ -28,7 +29,7 @@ namespace CounterStrike.UserInterfaces.BuyMenu
 
             int currentOption = 0;
 
-            foreach(MenuButton button in MenuOptions)
+            foreach(BuyMenuButton button in MenuOptions)
             {
                 button.Top.Set(5 + 42 * currentOption, 0);
                 button.Left.Set(5, 0);
@@ -40,7 +41,7 @@ namespace CounterStrike.UserInterfaces.BuyMenu
                 currentOption++;
             }
 
-            BackButton = new MenuButton("Back");
+            BackButton = new BuyMenuButton("Back");
             BackButton.Top.Set(this.Height.Pixels - 60, 0);
             BackButton.Left.Set(10, 0);
             BackButton.Height.Set(38, 0);
@@ -52,7 +53,7 @@ namespace CounterStrike.UserInterfaces.BuyMenu
 
         public void AddOption(string optionName, Action<UIMouseEvent, UIElement> action = null)
         {
-            MenuButton option = new MenuButton(optionName);
+            BuyMenuButton option = new BuyMenuButton(optionName);
 
             if (action != null)
                 option.OnClick += new UIElement.MouseEvent(action);
@@ -69,13 +70,14 @@ namespace CounterStrike.UserInterfaces.BuyMenu
 
         public void GoToMainMenu(UIMouseEvent evt, UIElement listeningElement)
         {
-            BuyMenuState state = CSMod.Instance.BuyLayer.BuyUIState;
+            var state = CSMod.Instance.BuyLayer.BuyUIState;
+
             state.RemoveChild(this);
             state.Append(state.MainMenu);
         }
 
-        public List<MenuButton> MenuOptions { get; private set; }
+        public List<BuyMenuButton> MenuOptions { get; private set; }
 
-        public MenuButton BackButton { get; private set; }
+        public BuyMenuButton BackButton { get; private set; }
     }
 }

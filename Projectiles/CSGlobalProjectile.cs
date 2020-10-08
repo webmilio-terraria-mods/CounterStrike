@@ -17,7 +17,7 @@ namespace CounterStrike.Projectiles
 
             Player player = Main.player[projectile.owner];
 
-            if (player.HeldItem?.modItem == null || !(player.HeldItem.modItem is CSGun gun))
+            if (player.HeldItem?.modItem == null || !(player.HeldItem.modItem is GunItem gun))
                 return true;
 
             gunDefinitionPerProjectile.Add(projectile, gun.Definition);

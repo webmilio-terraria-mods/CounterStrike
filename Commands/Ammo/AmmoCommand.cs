@@ -36,11 +36,11 @@ namespace CounterStrike.Commands.Guns
                 List<string> ammo = new List<string>();
 
                 foreach (GunDefinition gun in csPlayer.OwnedAmmo())
-                    ammo.Add($"{gun.UnlocalizedName}:{csPlayer.GetAmmoCount(gun)}");
+                    ammo.Add($"{gun.UnlocalizedName}:{csPlayer.GetAmmo(gun)}");
             }
             else
             {
-                GunDefinition definition = GunDefinitionLoader.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
+                GunDefinition definition = GunDefinitions.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
 
                 if (definition == default)
                 {
@@ -48,7 +48,7 @@ namespace CounterStrike.Commands.Guns
                     return;
                 }
 
-                Main.NewText($"{definition.UnlocalizedName}:{csPlayer.GetAmmoCount(definition)}");
+                Main.NewText($"{definition.UnlocalizedName}:{csPlayer.GetAmmo(definition)}");
             }
         }
 

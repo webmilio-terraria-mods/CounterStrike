@@ -16,7 +16,7 @@ namespace CounterStrike
             BuyLayer = new BuyLayer(new BuyMenuState());
 
             Reload = RegisterHotKey("Reload", Keys.G.ToString());
-            OpenBuyMenu = RegisterHotKey("Open buy menu", Keys.NumPad0.ToString());
+            OpenBuyMenu = RegisterHotKey("Open Buy Menu", Keys.NumPad0.ToString());
         }
 
         private void UnloadClient()

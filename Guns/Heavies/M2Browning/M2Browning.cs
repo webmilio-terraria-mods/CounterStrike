@@ -1,17 +1,15 @@
-﻿using CounterStrike.Players;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Microsoft.Xna.Framework;
 using Terraria.ID;
 
-namespace CounterStrike.Guns.Heavy.M2Browning
+namespace CounterStrike.Guns.Heavies.M2Browning
 {
-    public sealed class M2Browning : CSGun
+    public sealed class M2Browning : GunItem
     {
         public M2Browning() : base("M2 Browning",
             "A large autocannon usually used mounted." +
             "\nShreds through waves of enemies with ease." + 
             "\nCan be mounted if on the ground.",
-            94, 18, GunDefinitionLoader.Instance.GetGeneric<M2BrowningDefinition>(),
+            94, 18, GunDefinitions.Instance.GetGeneric<M2BrowningDefinition>(),
             rarity: ItemRarityID.Red, shootProjectile: ProjectileID.BulletHighVelocity, shootSpeed: 20f)
         {
         }

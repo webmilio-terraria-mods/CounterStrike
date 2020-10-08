@@ -7,17 +7,16 @@ using Terraria.UI;
 
 namespace CounterStrike.UserInterfaces.BuyMenu
 {
-    public class BuyOption : MenuButton
+    public class BuyOption : BuyMenuButton
     {
-        public BuyOption(string optionName, GunDefinition gunToBuy) : base(optionName)
+        public BuyOption(string optionName, GunDefinition gun) : base(optionName, gun)
         {
-            Gun = gunToBuy;
+            Gun = gun;
         }
 
         public override void Click(UIMouseEvent evt)
         {
-            CSPlayer cPlayer = CSPlayer.Get();
-            cPlayer.TryBuyGun(Gun);
+            CSPlayer.Get().UIBuyGun(Gun);
         }
 
         public GunDefinition Gun { get; }

@@ -1,11 +1,11 @@
 ﻿namespace CounterStrike.Guns.Pistols.Glock18
 {
-    public class Glock18 : CSGun
+    public class Glock18 : GunItem
     {
         public Glock18() : base("Glock-18", 
             "The Glock 18 is a serviceable first-round pistol that works best against\n" +
             "unarmored opponents and is capable of firing three-round bursts (not yet lmao).",
-            30, 22, GunDefinitionLoader.Instance.GetGeneric<Glock18Definition>())
+            30, 22, GunDefinitions.Instance.GetGeneric<Glock18Definition>())
         {
         }
 

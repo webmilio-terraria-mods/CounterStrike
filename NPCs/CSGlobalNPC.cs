@@ -2,6 +2,7 @@
 using CounterStrike.Commands.Debug;
 using CounterStrike.Guns;
 using CounterStrike.HitBoxes;
+using CounterStrike.Players;
 using CounterStrike.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -119,6 +120,14 @@ namespace CounterStrike.NPCs
 
                 spriteBatch.Draw(Main.magicPixel, new Rectangle(offsetX, (int) (npc.TopLeft.Y - Main.screenPosition.Y) + i, 2, 2), sourceRectangle, hitBoxColor, npc.rotation, Vector2.Zero, SpriteEffects.None, 0);
             }
+        }
+
+
+        public override void NPCLoot(NPC npc)
+        {
+            if (npc.lastInteraction == 255) return;
+
+            CSPlayer.Get(npc.lastInteraction).OnKillNPC(npc);
         }
     }
 }

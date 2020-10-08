@@ -1,15 +1,19 @@
 ﻿using CounterStrike.Damage;
+using CounterStrike.Guns.Categories;
 using CounterStrike.Players;
 using WebmilioCommons.Managers;
 
 namespace CounterStrike.Guns
 {
-    public class GunDefinition : IHasUnlocalizedName
+    public abstract class GunDefinition : IHasUnlocalizedName
     {
-        public GunDefinition(string unlocalizedName, int price, float bulletCost, int magazineSize, int startingMagazineCount, FiringMode[] firingModes, int rpm, float baseMoveSpeedModifier, int killAward,
+        protected GunDefinition(string unlocalizedName, GunCategory category, int price, float bulletCost, int magazineSize, int startingMagazineCount, FiringMode[] firingModes, int rpm, float baseMoveSpeedModifier, int killAward,
             int damage, float baseAccuracy, float baseAccuracyChangePerShot, float armorPenetration, int penetrationPower, DamageProperties damageProperties, bool canBeMounted = false)
         {
             UnlocalizedName = unlocalizedName;
+            
+            Category = category;
+            Category.Add(this);
 
             Price = price;
 
@@ -58,6 +62,9 @@ namespace CounterStrike.Guns
 
 
         public string UnlocalizedName { get; }
+        public GunCategory Category { get; }
+
+        public virtual GunItem GunItem { get; internal set; }
 
         public int Price { get; }
 

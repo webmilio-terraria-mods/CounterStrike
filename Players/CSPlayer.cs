@@ -9,10 +9,12 @@ namespace CounterStrike.Players
     public sealed partial class CSPlayer : ModPlayer
     {
         private Item _previouslyHeldItem;
+        public const int MaxMoney = 16000;
 
         #region Player Getters
 
         public static CSPlayer Get() => Get(Main.LocalPlayer);
+        public static CSPlayer Get(int whoAmI) => Get(Main.player[whoAmI]);
         public static CSPlayer Get(ModPlayer modPlayer) => Get(modPlayer.player);
         public static CSPlayer Get(Player player) => player.GetModPlayer<CSPlayer>();
 
@@ -27,7 +29,15 @@ namespace CounterStrike.Players
         /// <returns>The new amount.</returns>
         public int ModifyMoney(int amount)
         {
-            Money += amount;
+            var newMoney = Money + amount;
+
+            if (newMoney > MaxMoney)
+                newMoney = MaxMoney;
+
+            if (newMoney < 0)
+                newMoney = 0;
+
+            Money = newMoney;
             // TODO Add animation code here.
 
             return Money;
@@ -89,19 +99,19 @@ namespace CounterStrike.Players
 
         public override void PreUpdate()
         {
-            CSGun gun = null;
+            GunItem gunItem = null;
 
-            if (player.HeldItem != null && player.HeldItem.modItem is CSGun csGun)
-                gun = csGun;
+            if (player.HeldItem != null && player.HeldItem.modItem is GunItem csGun)
+                gunItem = csGun;
 
-            if (gun == null || gun.Definition.GetAccuracyChangePerShot(this) < 0)
+            if (gunItem == null || gunItem.Definition.GetAccuracyChangePerShot(this) < 0)
             {
                 AccuracyFactor += ACCURACY_PER_TICK;
 
                 if (AccuracyFactor >= 1)
                     AccuracyFactor = 1;
             }
-            else if (gun.Definition.GetAccuracyChangePerShot(this) > 0 && !LeftClick)
+            else if (gunItem.Definition.GetAccuracyChangePerShot(this) > 0 && !LeftClick)
                 AccuracyFactor = 0;
         }
 
@@ -152,7 +162,7 @@ namespace CounterStrike.Players
                 this.SendIfLocal(new PlayerMoneyChangedPacket(_money - oldMoney));
             }*/
             set;
-        }
+        } = 800;
 
         public float AccuracyFactor
         {

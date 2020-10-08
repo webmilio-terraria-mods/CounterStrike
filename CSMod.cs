@@ -20,6 +20,8 @@ namespace CounterStrike
 
         public override void Load()
         {
+            GunDefinitions.Instance.TryLoad();
+
             CSGlobalProjectile.gunDefinitionPerProjectile = new Dictionary<Projectile, GunDefinition>();
             ExtraClipRule.Load();
 
@@ -41,6 +43,7 @@ namespace CounterStrike
         {
             NetworkPacketLoader.Instance.HandlePacket(reader, whoAmI);
         }
+
 
         public static CSMod Instance { get; private set; }
 	}

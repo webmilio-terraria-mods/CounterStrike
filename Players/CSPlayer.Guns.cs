@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using CounterStrike.Guns;
+using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using WebmilioCommons.Extensions;
 
@@ -14,15 +16,28 @@ namespace CounterStrike.Players
         public void DismountGun() => GunMounted = false;
 
 
+        public bool UIBuyGun(GunDefinition gun)
+        {
+            if (player.inventory.Find<GunItem>(i => i.modItem is GunItem item && item.Definition == gun) == default)
+            {
+                TryBuyGun(gun);
+                TryFillAmmo(gun);
+            }
+            else
+            {
+                TryFillAmmo(gun);
+            }
+
+            return true;
+        }
+
         public bool TryBuyGun(GunDefinition gun)
         {
             if (Money < gun.Price)
                 return false;
 
-            CheckAmmo(gun);
-
-            _ammo[gun] = gun.StartingMagazineCount * gun.MagazineSize;
             Money -= gun.Price;
+            player.QuickSpawnItem(gun.GunItem);
 
             return true;
         }
@@ -46,6 +61,15 @@ namespace CounterStrike.Players
         }
 
         #endregion
+
+
+        public override void OnRespawn(Player plr)
+        {
+            var csPlayer = Get(plr);
+
+            csPlayer.Money = 800;
+            csPlayer._ammo.Clear();
+        }
 
 
         public bool Reloading { get; set; }

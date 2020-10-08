@@ -19,7 +19,7 @@ namespace CounterStrike.Commands.Ammo
 
         protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
-            if (!(player.HeldItem?.modItem is CSGun gun))
+            if (!(player.HeldItem?.modItem is GunItem gun))
             {
                 Main.NewText("You must be holding a gun to refill ammo!", Color.Yellow);
                 return;

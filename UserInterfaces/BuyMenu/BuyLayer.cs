@@ -10,8 +10,8 @@ namespace CounterStrike.UserInterfaces.BuyMenu
         {
             BuyUIState = state;
             BuyUIState.Activate();
-            Interactable = new UserInterface();
-            Interactable.SetState(BuyUIState);
+            Interface = new UserInterface();
+            Interface.SetState(BuyUIState);
         }
 
 
@@ -20,14 +20,14 @@ namespace CounterStrike.UserInterfaces.BuyMenu
             if (BuyUIState != null && BuyUIState.Visible)
             {
                 BuyUIState?.Update(gameTime);
-                Interactable.Update(gameTime);
+                Interface.Update(gameTime);
             }
         }
 
         protected override bool DrawSelf()
         {
             if(BuyUIState != null && BuyUIState.Visible)
-                BuyUIState?.Draw(Main.spriteBatch);
+                BuyUIState.Draw(Main.spriteBatch);
 
             return true;
         }
@@ -35,6 +35,6 @@ namespace CounterStrike.UserInterfaces.BuyMenu
 
         public BuyMenuState BuyUIState { get; }
 
-        public UserInterface Interactable { get; }
+        public UserInterface Interface { get; }
     }
 }

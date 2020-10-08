@@ -15,10 +15,10 @@ namespace CounterStrike.Commands.Debug
         protected override void ActionLocal(CommandCaller caller, Player player, string input, string[] args)
         {
             Main.NewText("Unloading CS Gun Definitions...");
-            GunDefinitionLoader.Instance.Unload();
+            GunDefinitions.Instance.Unload();
 
             Main.NewText("Loading CS Gun Definitions...");
-            GunDefinitionLoader.Instance.TryLoad();
+            GunDefinitions.Instance.TryLoad();
 
             Main.NewText("Reload complete.");
         }

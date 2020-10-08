@@ -27,7 +27,7 @@ namespace CounterStrike.Commands.Guns
             }
 
 
-            GunDefinition definition = GunDefinitionLoader.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
+            GunDefinition definition = GunDefinitions.Instance.FindGeneric(g => g.UnlocalizedName.Equals(args[0], StringComparison.CurrentCultureIgnoreCase));
             if (definition == default)
             {
                 Main.NewText($"Gun name '{args[0]} is invalid. Use /cs_guns for a list of guns.");

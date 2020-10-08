@@ -17,20 +17,20 @@ namespace CounterStrike.Players
 
 
         // Ammo checks
-        private void CheckAmmo(GunDefinition gun)
+        private void SafetyAmmo(GunDefinition gun)
         {
             if (!_ammo.ContainsKey(gun))
                 _ammo.Add(gun, 0);
         }
 
-        public int GetAmmoCount(GunDefinition gun)
+        public int GetAmmo(GunDefinition gun)
         {
-            CheckAmmo(gun);
+            SafetyAmmo(gun);
 
             return _ammo[gun];
         }
 
-        public bool HasAmmo(GunDefinition gun) => GetAmmoCount(gun) > 0;
+        public bool HasAmmo(GunDefinition gun) => GetAmmo(gun) > 0;
 
 
         public Dictionary<GunDefinition, int>.KeyCollection OwnedAmmo() => _ammo.Keys;
@@ -43,7 +43,12 @@ namespace CounterStrike.Players
         public float GetMaxMagazines(GunDefinition gun) => GetMaxAmmo(gun) / (float) gun.MagazineSize;
 
 
-        public int GetMissingAmmo(GunDefinition gun) => GetMaxAmmo(gun) - GetAmmoCount(gun);
+        public int GetMissingAmmo(GunDefinition gun)
+        {
+            SafetyAmmo(gun);
+
+            return GetMaxAmmo(gun) - GetAmmo(gun);
+        }
 
         public bool HasSpaceForAmmo(GunDefinition gun, int ammoCount = 1) => GetMissingAmmo(gun) >= ammoCount;
 
@@ -51,7 +56,7 @@ namespace CounterStrike.Players
         // Buying
         private void BuyAmmo(GunDefinition gun, int count = 1)
         {
-            CheckAmmo(gun);
+            SafetyAmmo(gun);
 
             _ammo[gun] += count;
         }
@@ -65,16 +70,27 @@ namespace CounterStrike.Players
             return true;
         }
 
+
+        public void GetAmmoCost(GunDefinition gun, out int buyable, out float cost)
+        {
+            buyable = GetMissingAmmo(gun);
+            cost = gun.BulletCost * buyable;
+        }
+
         public bool TryFillAmmo(GunDefinition gun)
         {
-            int buyable = GetMissingAmmo(gun);
-            float cost = gun.BulletCost * buyable;
+            GetAmmoCost(gun, out var buyable, out var cost);
 
             // HasSpaceForAmmo is redundant since it uses GetBuyableAmmo.
             if (!HasSpaceForAmmo(gun, buyable) || cost > Money)
                 return false;
 
+            if (cost == 0)
+                return true;
+
             BuyAmmo(gun, buyable);
+            Money -= (int) Math.Ceiling(cost);
+
             return true;
         }
 
@@ -90,6 +106,17 @@ namespace CounterStrike.Players
         }
 
 
+        public void ConsumeAmmo(GunDefinition gun, int amount)
+        {
+            var current = GetAmmo(gun);
+
+            if (current - amount < 0)
+                throw new Exception("Tried consumming more ammo than the player has!");
+
+            _ammo[gun]--;
+        }
+
+
         #region Hooks
 
         private void InitializeAmmo()
@@ -102,7 +129,7 @@ namespace CounterStrike.Players
         {
             foreach (KeyValuePair<string, object> ammoTag in tag.GetCompound(AMMO_TAG))
             {
-                GunDefinition gun = GunDefinitionLoader.Instance.FindGeneric(g => g.UnlocalizedName.Equals(ammoTag.Key, StringComparison.CurrentCultureIgnoreCase));
+                GunDefinition gun = GunDefinitions.Instance.FindGeneric(g => g.UnlocalizedName.Equals(ammoTag.Key, StringComparison.CurrentCultureIgnoreCase));
 
                 if (gun == default)
                     continue;

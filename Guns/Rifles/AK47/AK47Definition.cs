@@ -10,7 +10,7 @@ namespace CounterStrike.Guns.Rifles.AK47
             ConstDamage = 36;
 
 
-        public AK47Definition() : base("ak47", 2700, (float) ConstMagazinePrice / ConstMagazineSize, ConstMagazineSize, 2, new FiringMode[] {FiringMode.Automatic},
+        public AK47Definition() : base("ak47", RifleCategory.Instance, 2700, (float) ConstMagazinePrice / ConstMagazineSize, ConstMagazineSize, 2, new FiringMode[] {FiringMode.Automatic},
             600, 0.86f, 300, ConstDamage, 0.85f, -0.31f, 0.775f, 200,
             new DamageProperties(ConstDamage, 143, 35, 44, 26))
         {

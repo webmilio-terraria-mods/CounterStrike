@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace CounterStrike.Guns.Heavy.Negev
+namespace CounterStrike.Guns.Heavies.Negev
 {
-    public class Negev : CSGun
+    public class Negev : GunItem
     {
         public Negev() : base("Negev",
             "The Negev is a beast that can keep the enemy at bay with its pin-point\n" +
             "supressive fire, provided you have the luxury of time to gain control over it.",
-            88, 28, GunDefinitionLoader.Instance.GetGeneric<NegevDefinition>())
+            88, 28, GunDefinitions.Instance.GetGeneric<NegevDefinition>())
         {
         }
 
